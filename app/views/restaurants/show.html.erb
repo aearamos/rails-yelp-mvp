@@ -1,0 +1,36 @@
+<h1>Nome: <%= @restaurant.name %></h1>
+
+<h4>Endereço: <%= @restaurant.address %> </h4>
+
+<h4>Phone: <%= @restaurant.phone %> </h4>
+
+<h4><b>Average Rating:<b>
+  <%if  @restaurant.reviews.size == 0 %>
+      No ratings yet! Click <%= link_to 'here', new_restaurant_review_path(@restaurant)%> to be the first one to rate.
+    <% else %>
+      <div class="star-ratings-css">
+        <div class="star-ratings-css-top" style="width: <%= (((@restaurant.reviews.sum(:rating)/@restaurant.reviews.size.to_f))/4) * 100 %>%"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+        <div class="star-ratings-css-bottom"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+      </div>
+    <% end %>
+</h4>
+
+<h4>Reviews:<% @restaurant.reviews.each do |review| %> </h4>
+  <p>(<%= review.id %>) <%= review.content %></p>
+  <% end %>
+<br>
+
+<%= link_to "Editar", edit_restaurant_path(@restaurant) %>
+
+<br>
+
+<%= link_to "Delete this restaurant", restaurant_path(@restaurant), method: :delete, data: { confirm: "Are you sure?" } %>
+
+<br>
+<%= link_to "See all", restaurants_path %>
+
+<br>
+
+<%= link_to "Review this restaurant", new_restaurant_review_path(@restaurant)%>
+
+
